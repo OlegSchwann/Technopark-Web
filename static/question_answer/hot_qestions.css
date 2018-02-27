@@ -1,0 +1,204 @@
+/* Не осилил bootstrap. Не понимаю чего-то важного*/
+/* Тупой потому что. НО что делать, когда не знаешь, что делать?*/
+/* Используемые цвета: http://color.romanuke.com/tsvetovaya-palitra-3588/
+    #234a56
+    #417d95
+    #89b9c5
+    #c1dee2
+    #dde7dc */
+.bordered {
+    border: 1px solid #234a56;
+    border-radius: 5px;
+    background: white;
+    margin: 1px;
+}
+h1, h2, h3, h4, h5{
+    margin-bottom: 1pc;
+    margin-top: 0;
+}
+
+body {
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    background: #c1dee2;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1pc;
+    border-bottom: solid black 1px;
+    margin-bottom: 1px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#417d95+31,89b9c5+71 */
+    background: #417d95; /* Old browsers */
+    background: -moz-linear-gradient(left, #417d95 31%, #89b9c5 71%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #417d95 31%,#89b9c5 71%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #417d95 31%,#89b9c5 71%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#417d95', endColorstr='#89b9c5',GradientType=1 ); /* IE6-9 */
+}
+
+.logo {
+    margin: 0;
+    width: calc(100% / 3);
+    color: #c1dee2;
+}
+
+.search-form {
+    width: calc(100% / 3);
+    display: flex;
+    flex-direction: row;
+    margin-left: 5px;
+}
+
+.search-area {
+    background: #ffffff;
+    padding-left: 1pc;
+    padding-right: 1pc;
+    display: flex;
+    min-width: 0;
+}
+
+.search-button {
+    display: flex;
+    background: #89b9c5;
+    color: white;
+    outline: none;
+    margin-left: 5px;
+}
+
+.avatar-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5px;
+}
+
+.qestion__avatar {
+    height: 4pc;
+}
+
+.action-login {
+    flex-direction: column;
+    margin-left: 5px;
+}
+
+.nickname {
+    margin: 0;
+}
+
+.settings-logout-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.settings a{
+    color: #000000;
+}
+
+.logout a{
+    margin-left: 5px;
+    color: #000000;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.left-column {
+    width: 32%;
+}
+
+.popular-tags-wrapper{
+    padding: 15px;
+}
+.popular-tags a:nth-child(5n+0) {
+    color: #1e7e34;
+}
+
+.popular-tags a:nth-child(5n+1) {
+    color: #1d2124;
+}
+
+.popular-tags a:nth-child(5n+2) {
+    color: #d39e00;
+}
+
+.popular-tags a:nth-child(5n+3) {
+    color: #721c24;
+}
+
+.popular-tags a:nth-child(5n+4) {
+    color: indigo;
+}
+
+.best-members-wrapper{
+    padding: 15px;
+}
+
+.best-members {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.member {
+    display: block;
+}
+
+main {
+    width: 64%;
+}
+
+.main-captions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.question{
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+}
+
+.evaluation_buttons{
+    margin: 0;
+    padding: 0;
+    background: inherit;
+    border: none;
+    outline: none;
+    font-size: medium;
+}
+
+.rating-counter{
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.plus:hover{
+    color: #1e7e34;
+}
+
+.minus:hover{
+    color: #b21f2d;
+}
+
+.qestion__content{
+    margin-left: 15px;
+}
+
+footer {
+    margin-top: 1px;
+    border-top: 1px solid #234a56;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#417d95+31,89b9c5+71 */
+    background: #417d95; /* Old browsers */
+    background: -moz-linear-gradient(left, #417d95 31%, #89b9c5 71%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #417d95 31%,#89b9c5 71%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #417d95 31%,#89b9c5 71%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#417d95', endColorstr='#89b9c5',GradientType=1 ); /* IE6-9 */
+}
