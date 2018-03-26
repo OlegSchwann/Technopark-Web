@@ -20,11 +20,14 @@ from question_answer import views
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     # cписок новых вопросов(главная страница) (URL = /)
-    path('', views.all_questions, name='new'),
+    path('', views.all_questions,),
+    path('<int:page>/', views.all_questions, name='new'),
     # cписок “лучших” вопросов(URL= /hot/)
-    path('hot/<str:page>/', views.hot_questions, name='hot'),
+    path('hot/', views.hot_questions),
+    path('hot/<int:page>/', views.hot_questions, name='hot'),
     # cписок вопросов по тэгу(URL= /tag/blablabla/)
     path('tag/<str:tag>/', views.one_tag_page, name='tag'),
+    path('tag/<str:tag>/<int:page>/', views.one_tag_page, name='tag_page'),
     # cтраница одного вопроса со списком ответов(URL= /question/35/)
     path('question/<int:question_id>/', views.one_question_page, name='question'),
     # форма логина(URL= /login/)

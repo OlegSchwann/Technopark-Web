@@ -7,3 +7,23 @@
         <h4>Свежие вопросы.</h4>
     </div>
 {% endblock section_header %}
+
+{% block pagination %}
+    <nav>
+        <ul class="pagination bordered">
+            {% for previous_page in previous_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'new' previous_page %}">{{ previous_page }}</a>
+                </li>
+            {% endfor %}
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'new' questions.number %}">{{ questions.number }}</a>
+            </li>
+            {% for next_page in next_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'new' next_page %}">{{ next_page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock pagination %}

@@ -3,6 +3,7 @@ import question_answer.paginator_lib # моя обёртка вокруг django
 
 # Create your views here.
 
+
 # главная страница '/'
 # показывает заданные вопросы списком
 def hot_questions(request, page=1):
@@ -34,7 +35,7 @@ def hot_questions(request, page=1):
                 "tags": ["Django", "Python", "Разработка интерфейсов", "css"],
                 "rating": 0,
                 "ansvers": 0
-            } for x in range(1, 101)
+            } for x in range(1, 106)
         ]
     }
     context["questions"] = page = question_answer.paginator_lib.paginator_wrap(
@@ -45,8 +46,44 @@ def hot_questions(request, page=1):
     return render(request, 'question_answer/hot_questions.html', context=context)
 
 
-def all_questions(request):
-    return render(request, 'question_answer/all_questions.html', {})
+def all_questions(request, page=1):
+    # сначала просто заглушки - литеральные константы
+    context = {
+        "popular_tags": [
+            "perl",
+            "python",
+            "tehnopark",
+            "mysql",
+            "django",
+            "mail.ru",
+            "firefox"
+        ],
+        "best_members": [
+            "Mr.Freeman",
+            "Dr.Horse",
+            "Bender",
+            "V.Pupkin"
+        ],
+        "questions": [
+            {
+                "id": x,
+                "title": "{}-й вопрос.".format(x),
+                "text": "Привет! Я тут делаю сайтик на Django, для курса по web. Собственно, вокруг. "
+                        "Как бы улучшить, чтоб нормально работало и было адекватным в использовании?",
+                "nickname": "Max",
+                "time": "25 марта",
+                "tags": ["Django", "Python", "Разработка интерфейсов", "css"],
+                "rating": 0,
+                "ansvers": 0
+            } for x in range(1, 106)
+        ]
+    }
+    context["questions"] = page = question_answer.paginator_lib.paginator_wrap(
+        context["questions"], page
+    )
+    context['previous_pages'] = question_answer.paginator_lib.five_before(page)
+    context['next_pages'] = question_answer.paginator_lib.five_after(page)
+    return render(request, 'question_answer/all_questions.html', context=context)
 
 
 def adding_question(request):
@@ -69,8 +106,45 @@ def one_question_page(request, question_id=1):
 
 
 # страница вопросов по одному тегу
-def one_tag_page(request, tag=''):
-    return render(request, 'question_answer/one_tag_page.html', {})
+def one_tag_page(request, tag, page=1):
+    # сначала просто заглушки - литеральные константы
+    context = {
+        "popular_tags": [
+            "perl",
+            "python",
+            "tehnopark",
+            "mysql",
+            "django",
+            "mail.ru",
+            "firefox"
+        ],
+        "best_members": [
+            "Mr.Freeman",
+            "Dr.Horse",
+            "Bender",
+            "V.Pupkin"
+        ],
+        "questions": [
+            {
+                "id": x,
+                "title": "{}-й вопрос.".format(x),
+                "text": "Привет! Я тут делаю сайтик на Django, для курса по web. Собственно, вокруг. "
+                        "Как бы улучшить, чтоб нормально работало и было адекватным в использовании?",
+                "nickname": "Max",
+                "time": "25 марта",
+                "tags": ["Django", "Python", "Разработка интерфейсов", "css"],
+                "rating": 0,
+                "ansvers": 0
+            } for x in range(1, 106)
+        ]
+    }
+    context["tag"] = tag
+    context["questions"] = page = question_answer.paginator_lib.paginator_wrap(
+        context["questions"], page
+    )
+    context['previous_pages'] = question_answer.paginator_lib.five_before(page)
+    context['next_pages'] = question_answer.paginator_lib.five_after(page)
+    return render(request, 'question_answer/one_tag_page.html', context=context)
 
 
 # страница настроек пользователя

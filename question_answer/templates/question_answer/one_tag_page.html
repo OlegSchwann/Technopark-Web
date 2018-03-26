@@ -4,6 +4,26 @@
 
 {% block section_header %}
     <div class="main-captions bordered">
-        <h4>Вопросы по тегу "test".</h4>
+        <h4>Вопросы по тегу "{{ tag }}".</h4>
     </div>
 {% endblock section_header %}
+
+{% block pagination %}
+    <nav>
+        <ul class="pagination bordered">
+            {% for previous_page in previous_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'tag_page' tag previous_page %}">{{ previous_page }}</a>
+                </li>
+            {% endfor %}
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'tag_page' tag questions.number %}">{{ questions.number }}</a>
+            </li>
+            {% for next_page in next_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'tag_page' tag next_page %}">{{ next_page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock pagination %}
