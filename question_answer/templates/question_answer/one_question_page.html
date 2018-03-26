@@ -1,0 +1,78 @@
+{#<html>#}
+{#<head>#}
+{#    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">#}
+{#    <!--Для того, что бы работало автодополнение-->#}
+{#</head>#}
+{#</html>#}
+
+{% extends "question_answer/basic_page.html" %}
+{% block links_in_header %}
+    <link rel="stylesheet" href="/static/question_answer/one_question_page.css" type="text/css">
+{% endblock links_in_header %}
+
+{% block main_content %}
+    <div class="main-content bordered">
+        <div class="row ">
+            <div class="col-2"><!--обёртка вокруг аватарки и счётчика-->
+                <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                <div class="rating-counter">
+                    <span>+5</span>
+                    <form>
+                        <input class="evaluation_buttons plus" type="submit" value="▲">
+                        <input class="evaluation_buttons minus" type="submit" value="▼">
+                    </form>
+                </div>
+            </div>
+            <div class="qestion__content col-10"><!--Вокруг текстовой части-->
+                <h5>Как построить свой лунопарк?</h5>
+                <div><!--текст вопроса-->
+                    Lorem ipsum — dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+                    ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
+                    tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.[1] Duis aute irure
+                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                    sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </div>
+                <div>
+                    <span>
+                        Tags:
+                        <a>black-jack</a>
+                        <a>bender</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--раздел с ответами на комментарий. Система такая-же, как и в обычной енте вопросов, но есть checkbox "верный"-->
+        <hr>
+        <div>
+            <div class="row ">
+                <div class="col-2"><!--обёртка вокруг аватарки и счётчика-->
+                    <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                    <div class="rating-counter">
+                        <span>+5</span>
+                        <form>
+                            <input class="evaluation_buttons plus" type="submit" value="▲">
+                            <input class="evaluation_buttons minus" type="submit" value="▼">
+                        </form>
+                    </div>
+                </div>
+                <div class="qestion__content col-10"><!--Вокруг текстовой части-->
+                    <h5>Duis aute irure dolor</h5>
+                    <div><!--текст вопроса-->
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>
+                    <form>
+                        <input id="ansver_1" type="checkbox">
+                        <label for="ansver_1">правильно</label>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!--форма для ответа-->
+        <form class="form-group">
+            <textarea class="form-control" id="AnsverTextarea" rows="1">Ваш ответ.</textarea>
+            <br>
+            <input type="submit" class="btn btn-info" value="отправить">
+        </form>
+    </div>
+{% endblock main_content %}

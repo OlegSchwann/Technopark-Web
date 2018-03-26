@@ -1,0 +1,65 @@
+{# формирует ленту вопросов, оставляя незаполненным только заголовок #}
+{# используется для новых, горячих вопросов и для тега#}
+
+{#<html><head><link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css"></head></html>#}
+
+{% extends "question_answer/basic_page.html" %}
+{% block links_in_header %}
+    <link rel="stylesheet" href="/static/question_answer/hot_qestions.css" type="text/css">
+{% endblock links_in_header %}
+
+{% block main_content %}
+    <div class="main-container d-flex flex-column">
+        {% block section_header %}
+            <div class="main-captions bordered">
+                лента без специализации
+            </div>
+        {% endblock section_header %}
+        {% for question in questions %}
+            <div class="question bordered">
+                <div class="col-2">{#обёртка вокруг аватарки и счётчика#}
+                    <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                    <div class="rating-counter">
+                        <span>{{ question.rating }}</span>
+                        <form>
+                            <input class="evaluation_buttons plus" type="submit" value="▲">
+                            <input class="evaluation_buttons minus" type="submit" value="▼">
+                        </form>
+                    </div>
+                </div>
+                <div class="qestion__content col-10"><!--Вокруг текстовой части-->
+                    <h5><a href="{% url "question" question.id %}">{{ question.title }}</a></h5>
+                    <div>{{ question.text }}</div>
+                    <div><a href="{% url "question" question.id %}">ответы ({{ question.ansvers }})</a></div>
+                    <div class="tags-field">
+                        🔗
+                        {% for tag in question.tags %}
+                            <a href="{% url "tag" tag %}">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% block pagination%}
+    <nav> <!--пагинатор-пустышка-->
+        <ul class="pagination bordered">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    {% endblock pagination %}
+{% endblock main_content %}

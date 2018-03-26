@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--Это базовый шаблон, создающий шапку, правую колонку и нижнюю панель
+        блок content остаётся пустым и будет переопределён дочерними шаблонами-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/question_answer/basic_page.css" type="text/css">
+    {% block links_in_header %}
+        {#ссылки на js и css, специфичные для каждой страницы#}
+    {% endblock links_in_header %}
+</head>
+<body>
+<header class="gradient_backgraund">
+    <a href="/"><h1 class="logo col-3">AskMax</h1></a>
+    <form class="d-flex d-inline-flex col-5">
+        <input class="form-control" placeholder="" type="text">
+        <button class="btn btn-info" type="submit">Найти</button>
+    </form>
+    <div class="avatar-wrapper col-4">
+        <div class="col-5">
+            <img src="/static/img/block_100x100pc.png" class="user_avatar bordered">
+        </div>
+        <div class="action-login">
+            <h5 class="nickname">Dr. Pepper</h5>
+            <div class="row">
+                <div class="settings col-6"><a href="#">settings</a></div>
+                <div class="logout col-6"><a href="#">logout</a></div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="main-container">
+    <div class="left-column col-4">
+        <div class="popular-tags-wrapper bordered">
+            <h4>Популярные темы</h4>
+            <div class="popular-tags">
+                {% for tag in popular_tags %}
+                    <a href="{% url 'tag' tag %}">{{ tag }}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="best-members-wrapper bordered">
+            <h4>Лучшие участники</h4>
+            <div class="best-members">
+                {% for member in best_members %}
+                    <span class="member">{{ member }}</span><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <main class="col-8">
+        {% block main_content %}
+            Тут должено распологаться полезное содержимое сайта.
+        {% endblock main_content %}
+    </main>
+</div>
+<div class="crutch_for_footer"></div>
+<footer class="gradient_backgraund">
+    <span>Семёнов Максим</span>
+</footer>
+</body>
+</html>
+

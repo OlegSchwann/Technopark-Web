@@ -1,0 +1,31 @@
+{#<html>#}
+{#<head>#}
+{#    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">#}
+{#</head>#}
+{#</html>#}
+
+
+{% extends "question_answer/basic_page.html" %}
+{% block links_in_header %}
+    <link rel="stylesheet" href="/static/question_answer/adding_question.css" type="text/css">
+{% endblock links_in_header %}
+
+{% block main_content %}
+    <div class="main-captions bordered">
+        <h3>Новый вопрос</h3>
+    </div>
+    <div class="bordered">
+        <form class="form_of_question">
+            <div class="form-group">
+                <textarea class="form-control" rows="1" placeholder="заголовок"></textarea>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" placeholder="Что бы вы хотели спросить?"></textarea>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="1" placeholder="теги, разделяются запятой."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Спросить</button>
+        </form>
+    </div>
+{% endblock main_content %}

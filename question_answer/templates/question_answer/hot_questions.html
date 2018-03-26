@@ -1,112 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/static/question_answer/hot_qestions.css" type="text/css">
-</head>
-<body>
-<!--По порядку:
-header
-    логотип
-    Поиск
-    кнопка поиска
-    аватарка
-    Настройки
-    выход
--->
-<header>
-    <h1 class="logo">AskMax</h1>
-    <form class="search-form">
-        <input class="search-area bordered" placeholder="Search" type="text">
-        <button class="search-button bordered" type="submit">🔎</button>
-    </form>
-    <div class="avatar-wrapper">
-        <img src="/static/images/block_100x100pc.png" class="qestion__avatar bordered">
-        <div class="action-login">
-            <h5 class="nickname">Dr. Pepper</h5>
-            <div class="settings-logout-wrapper">
-                <div class="settings"><a href="">settings</a></div>
-                <div class="logout"><a href="">logout</a></div>
-            </div>
-        </div>
+{#<html><head><link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css"></head></html>#}
+
+{% extends "question_answer/questions_tape.html" %}
+
+{% block section_header %}
+    <div class="main-captions bordered">
+        <h4>Самые интересные вопросы</h4>
     </div>
-</header>
+{% endblock section_header %}
 
-<div class="main-container">
-    <!-- Левая колонка
-    Популярные темы
-    лучшие участники -->
-    <div class="left-column">
-        <div class="popular-tags-wrapper bordered">
-            <h4>Популярные темы</h4>
-            <div class="popular-tags">
-                <a>perl</a>
-                <a>python</a>
-                <a>tehnopark</a>
-                <a>mysql</a>
-                <a>django</a>
-                <a>mail.ru</a>
-                <a>firefox</a>
-            </div>
-        </div>
-        <div class="best-members-wrapper bordered">
-            <h4>Лучшие участники</h4>
-            <div class="best-members">
-                <a class="member">Mr.Freeman</a>
-                <a class="member">Dr. Horse</a>
-                <a class="member">Bender</a>
-                <a class="member">V. Pupkin</a>
-            </div>
-        </div>
-    </div>
-    <!--
-     правая колонка
-        Заголовок
-        ссылка на другие вопросы
-        столбик с кратким представлением вопросов
-        кнопки для предыдущих вопросов
-    -->
-    <main>
-        <div class="main-captions bordered">
-            <h2>Новые вопросы</h2>
-            <h5>Популярные вопросы</h5>
-        </div>
-        <div class="question bordered">
-            <div><!--обёртка вокруг аватарки и счётчика-->
-                <img class="qestion__avatar bordered" src="/static/images/block_100x100pc.png">
-                <div class="rating-counter">
-                    <span>+5</span>
-                    <form>
-                        <input class="evaluation_buttons plus" type="submit" value="▲">
-                        <input class="evaluation_buttons minus" type="submit" value="▼">
-                    </form>
-                </div>
-            </div>
-            <div class="qestion__content"><!--Вокруг текстовой части-->
-                <h5>Как построить свой лунопарк?</h5>
-                <div><!--текст вопроса-->
-                    Парни, у меня проблема с лунопарком. Не могу найти black-jack...
-                </div>
-                <div><!--вокруг счётчика комментариев и тегов-->
-                    <span>ответов(3)</span>
-                    <span>
-                        Tags:
-                        <a>black-jack</a>
-                        <a>bender</a>
-                    </span>
-                </div>
-            </div>
-    </main>
-</div>
-
-
-<!--footer
-    краткая информация-->
-<footer>
-    <span>Создано Семёновым Максимом из первой группы, который поступил в Технопарк и очень боится вылететь</span>
-</footer>
-</body>
-</html>
-
+{% block pagination %}
+    <nav>
+        <ul class="pagination bordered">
+            {% for previous_page in previous_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'hot' previous_page %}">{{ previous_page }}</a>
+                </li>
+            {% endfor %}
+            <li class="page-item active">
+                <a class="page-link" href="{% url 'hot' questions.number %}">{{ questions.number }}</a>
+            </li>
+            {% for next_page in next_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'hot' next_page %}">{{ next_page }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock pagination %}

@@ -1,8 +1,9 @@
-.main-captions {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+.main-captions{
     padding: 15px;
+}
+
+.main-captions h1, h2, h3, h4, h5, h6{
+    margin: 0;
 }
 
 .question {
@@ -39,11 +40,6 @@
 
 .minus:hover {
     color: #b21f2d;
-}
-
-.tags-field a {
-    margin-left: 0.5em;
-    margin-right: 0.5em;
 }
 
 .page-item {

@@ -1,0 +1,31 @@
+.main-content{
+    padding: 15px;
+}
+
+.evaluation_buttons {
+    margin: 0;
+    padding: 0;
+    background: inherit;
+    border: none;
+    outline: none;
+    font-size: medium;
+}
+
+.rating-counter {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.plus:hover {
+    color: #1e7e34;
+}
+
+.minus:hover {
+    color: #b21f2d;
+}
+
+textarea{
+    min-height: 7rem;
+}
