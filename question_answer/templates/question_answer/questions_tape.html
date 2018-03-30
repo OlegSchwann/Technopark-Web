@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="qestion__content col-10"><!--Вокруг текстовой части-->
-                    <h5><a href="{% url "question" question.id %}">{{ question.title }}</a></h5>
+                    <a href="{% url "question" question.id %}"><h5>{{ question.title }}</h5></a>
                     <div>{{ question.text }}</div>
                     <div><a href="{% url "question" question.id %}">ответы ({{ question.ansvers }})</a></div>
                     <div class="tags-field">

@@ -150,3 +150,4 @@ def one_tag_page(request, tag, page=1):
 # страница настроек пользователя
 def user_settings(request):
     return render(request, 'question_answer/user_settings.html', {})
+
