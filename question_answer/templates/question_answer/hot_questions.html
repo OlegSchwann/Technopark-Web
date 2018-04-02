@@ -9,21 +9,21 @@
 {% endblock section_header %}
 
 {% block pagination %}
-    <nav>
-        <ul class="pagination bordered">
+    <nav class="bordered">
+        <div class="pagination">
             {% for previous_page in previous_pages %}
-                <li class="page-item">
+                <div class="page-item">
                     <a class="page-link" href="{% url 'hot' previous_page %}">{{ previous_page }}</a>
-                </li>
+                </div>
             {% endfor %}
-            <li class="page-item active">
-                <a class="page-link" href="{% url 'hot' questions.number %}">{{ questions.number }}</a>
-            </li>
+            <div class="page-item active">
+                <a class="page-link" href="{% url 'hot' current_page %}">{{ current_page }}</a>
+            </div>
             {% for next_page in next_pages %}
-                <li class="page-item">
+                <div     class="page-item">
                     <a class="page-link" href="{% url 'hot' next_page %}">{{ next_page }}</a>
-                </li>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     </nav>
 {% endblock pagination %}

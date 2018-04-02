@@ -33,7 +33,7 @@
     </div>
 </header>
 <div class="main-container">
-    <div class="left-column col-4">
+    <div class="col-md-4 left-column">
         <div class="popular-tags-wrapper bordered">
             <h4>Популярные темы</h4>
             <div class="popular-tags">
@@ -51,7 +51,7 @@
             </div>
         </div>
     </div>
-    <main class="col-8">
+    <main class="col-md-7 right-column">
         {% block main_content %}
             Тут должено распологаться полезное содержимое сайта.
         {% endblock main_content %}
@@ -60,6 +60,7 @@
 <div class="crutch_for_footer"></div>
 <footer class="gradient_backgraund">
     <span>Семёнов Максим</span>
+    <a href="https://github.com/OlegSchwann/Technopark-Web" class="github_link">Github</a>
 </footer>
 </body>
 </html>

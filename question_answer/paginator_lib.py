@@ -26,4 +26,5 @@ def five_after(page):
 
 def paginator_wrap(quwery_set, page_number):
     p = django.core.paginator.Paginator(quwery_set, 10)
+    # Пагинатор делает 1 запрос в базу и возвращает уже реальный массив, а не QuerySet
     return p.get_page(page_number)

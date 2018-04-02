@@ -11,7 +11,7 @@
     border: 1px solid #234a56;
     border-radius: 5px;
     background: white;
-    margin: 1px;
+    margin: 7px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -47,7 +47,7 @@ header {
     align-items: center;
     padding: 1pc;
     border-bottom: solid black 1px;
-    margin-bottom: 1px;
+    margin-bottom: 7px;
 }
 
 .gradient_backgraund {
@@ -108,8 +108,17 @@ header {
     justify-content: center;
 }
 
+.main-container .left-column{
+    padding-left: 0;
+}
+
+.right-column{
+    padding-right: 0;
+}
+
 .popular-tags-wrapper {
     padding: 15px;
+    margin-bottom: 14px;
 }
 
 .popular-tags a:nth-child(5n+0) {
@@ -145,8 +154,16 @@ header {
     display: block;
 }
 
-li.page-item.active a.page-link{
+.page-item.active a.page-link{
     background-color: #89b9c5;
+}
+
+.question_time{
+    opacity: 0.3;
+}
+
+.question_time:hover{
+    opacity: 0.9;
 }
 
 .crutch_for_footer { /*подпорка, чтоб контент не заезжал за footer блок*/
@@ -157,7 +174,12 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-top: 1px;
+    margin-top: 7px;
     border-top: 1px solid #234a56;
     height: 1.6rem;
+}
+
+.github_link{
+    color: #1b1e21 !important;
+    margin-left: 3rem;
 }

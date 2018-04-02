@@ -29,3 +29,8 @@
 textarea{
     min-height: 7rem;
 }
+
+.best_answer{
+    font-size: 2rem;
+    color: #1e7e34;
+}
