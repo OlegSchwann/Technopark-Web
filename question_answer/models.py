@@ -8,6 +8,19 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
+# замечания по User
+# NickName, должен быть уникальным
+# User.username
+#
+# Имя, под которым пользователи видят друг друга.
+# Его можно менять
+# User.first_name
+#
+# E-mail
+# User.email
+#
+# Password
+# User.password
 
 class Profile(models.Model):
     # ссылка на стандартную форму, с помощью которой происходит авторизация и регистрация
@@ -17,15 +30,15 @@ class Profile(models.Model):
     # avatar = models.ImageField()
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Profile.objects.create(user=instance)
+#
+#
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.profile.save()
 
 
 # тэг --выборка--> popular_tags
@@ -89,10 +102,10 @@ class QuestionLike(models.Model):
 def create_question_like(instance, created, **kwargs):
     """Callback, which add which reflects the rating in Question on every new QuestionLike"""
     updated_question = instance.question_id
-    print("добавляется ", instance.status, ", старый рейтинг ", updated_question.rating)
+    # print("добавляется ", instance.status, ", старый рейтинг ", updated_question.rating)
     updated_question.rating += instance.status
     updated_question.save()
-    print("новый рейтинг", updated_question.rating)
+    # print("новый рейтинг", updated_question.rating)
 
 
 # @receiver(pre_delete, sender=QuestionLike)

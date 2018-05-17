@@ -19,18 +19,27 @@
         <input class="form-control" placeholder="" type="text">
         <button class="btn btn-info" type="submit">Найти</button>
     </form>
-    <div class="avatar-wrapper col-4">
-        <div class="col-5">
-            <img src="/static/img/block_100x100pc.png" class="user_avatar bordered">
-        </div>
-        <div class="action-login">
-            <h5 class="nickname">Dr. Pepper</h5>
-            <div class="row">
-                <div class="settings col-6"><a href="#">settings</a></div>
-                <div class="logout col-6"><a href="#">logout</a></div>
+
+    {% if user.is_authenticated %}
+        <div class="avatar-wrapper col-4">
+            <div class="col-5">
+                <img src="/static/img/block_100x100pc.png" class="user_avatar bordered">
+            </div>
+            <div class="action-login">
+                <h5 class="nickname">{{ user.username }}</h5>
+                <a href="{% url "settings" %}">Настройки</a>
+                <form class="logout-link" action="{% url "logout" %}" method="POST">
+                    {% csrf_token %}
+                    <input class="btn btn-link" type="submit" value="Выйти">
+                </form>
             </div>
         </div>
-    </div>
+    {% else %} {# для не залогиненого. #}
+        <div><a href="{% url "login" %}">Войти</a> или <a href="{% url "signup" %}">зарегистрироваться.</a> Это не
+            займёт много времени.
+        </div>
+    {% endif %}
+
 </header>
 <div class="main-container">
     <div class="col-md-4 left-column">

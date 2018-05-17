@@ -59,6 +59,14 @@ header {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#417d95', endColorstr='#89b9c5', GradientType=1); /* IE6-9 */
 }
 
+.gradient_backgraund a, .btn-link, .btn-link:hover{
+    color: #ffffff;
+} /*Я не умею в дизайн 😢*/
+
+.logout-link{
+    display: inline;
+}
+
 .logo {
     margin: 0;
     color: #c1dee2;
@@ -92,14 +100,6 @@ header {
 .settings-logout-wrapper {
     display: flex;
     flex-direction: row;
-}
-
-.settings a {
-    color: #000000;
-}
-
-.logout a {
-    color: #000000;
 }
 
 .main-container {

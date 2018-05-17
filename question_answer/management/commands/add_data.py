@@ -14,7 +14,7 @@ def create_user():
     )
     one_user.profile.avatar_link = 'http://localhost:8080/static/avatar.jpeg'
     one_user.save()
-    print("one_user.id = ", one_user.id)
+    # print("one_user.id = ", one_user.id)
 
 
 def create_question():

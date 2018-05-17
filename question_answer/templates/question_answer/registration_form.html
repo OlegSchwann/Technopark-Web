@@ -11,40 +11,73 @@
     <link rel="stylesheet" href="/static/question_answer/registration_form.css" type="text/css">
 {% endblock links_in_header %}
 
+{# блок с формой регистрации. #}
 {% block main_content %}
-    <form class="register_box bordered" enctype="multipart/form-data" method="post">
-        <div class="alert alert-success" role="alert">
-            Вы успешно зарегистрировались!
+    <form enctype="multipart/form-data" method="post" action="{% url "signup" %}">
+        {% csrf_token %}
+        <div class="register_box bordered">
+            <div class="form-group">
+                <label for="NickNameInput">NickName</label>
+                {% if form.nickname.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.nickname.errors.as_text }}
+                    </div>
+                {% endif %}
+                <input class="form-control"
+                       name="{{ form.nickname.html_name }}"
+                       value="{{ form.nickname.value|default_if_none:'' }}"
+                       id="NickNameInput"
+                       placeholder="введите ник"
+                       type="text"
+                       required>
+                <small class="form-text text-muted">Ник должен быть уникальным.</small>
+            </div>
+            <div class="form-group">
+                <label for="NameInput">Name</label>
+                <input class="form-control"
+                       name="{{ form.name.html_name }}"
+                       value="{{ form.name.value|default_if_none:'' }}"
+                       id="NameInput"
+                       placeholder="введите имя"
+                       type="text"
+                       required>
+                <small class="form-text text-muted">Имя, под которым пользователи будут видеть вас.</small>
+            </div>
+            <div class="form-group">
+                <label for="EmailInput">E-mail</label>
+                <input class="form-control"
+                       id="EmailInput"
+                       name="{{ form.email.html_name }}"
+                       value="{{ form.email.value|default_if_none:'' }}"
+                       placeholder="ваша почта"
+                       type="email" required>
+                <small class="form-text text-muted">Почта нужна исключительно для восстановления пароля.</small>
+            </div>
+            <div class="form-group">
+                <label for="InputPassword1">Password</label>
+                {% if form.password.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.password.errors.as_text|safe }}
+                    </div>
+                {% endif %}
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors.as_text|safe }}
+                    </div>
+                {% endif %}
+                <input class="form-control" id="InputPassword1" name="{{ form.password.html_name }}"
+                       placeholder="пароль" type="password" required>
+                <br>
+                <input class="form-control" id="InputPassword2" name="{{ form.confirm_password.html_name }}"
+                       placeholder="повторите пароль" type="password">
+            </div>
+            <div class="form-group">
+                <label for="InputImage">Аватар</label>
+                <input class="form-control" id="InputImage" name="{{ form.avatar.html_name }}"
+                       placeholder="загрузите аватар" type="file"
+                       accept="image/png,image/jpeg">
+            </div>
+            <button type="submit" class="btn btn-info">Зарегистрироваться</button>
         </div>
-        <div class="alert alert-danger" role="alert">
-            Этот логин уже занят, попробуйте другой.
-        </div>
-        <div class="form-group">
-            <label for="LoginInput">Login</label>
-            <input class="form-control" id="LoginInput" placeholder="введите login" type="text" required>
-            <small class="form-text text-muted">Логин должен быть уникальным.</small>
-        </div>
-        <div class="form-group">
-            <label for="NickNameInput">NickName</label>
-            <input class="form-control" id="NickNameInput" placeholder="введите имя" type="text" required>
-            <small class="form-text text-muted">Имя, под которым пользователи будут видеть вас.</small>
-        </div>
-        <div class="form-group">
-            <label for="EmailInput">E-mail</label>
-            <input class="form-control" id="EmailInput" placeholder="ваша почта" type="email" required>
-            <small class="form-text text-muted">Почта нужна исключительно для восстановления пароля.</small>
-        </div>
-        <div class="form-group">
-            <label for="InputPassword1">Password</label>
-            <input class="form-control" id="InputPassword1" placeholder="пароль" type="password" required>
-            <br>
-            <input class="form-control" id="InputPassword1" placeholder="повторите пароль" type="password">
-        </div>
-        <div class="form-group">
-            <label for="InputImage">Аватар</label>
-            <input class="form-control" id="InputImage" placeholder="загрузите аватар" type="file"
-                   accept="image/png,image/jpeg">
-        </div>
-        <button type="submit" class="btn btn-info">Зарегистрироваться</button>
     </form>
 {% endblock main_content %}

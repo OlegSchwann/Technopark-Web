@@ -1,5 +1,5 @@
 import question_answer.models as my_db
-import question_answer.paginator_lib as paginator
+import question_answer.paginator_lib as paginator  # моя обёртка вокруг django paginator
 from django.db import models
 import datetime
 
@@ -41,7 +41,7 @@ class QuestionManager(models.Manager):
         """Return one quersion with id"""
         return my_db.Question.objects.filter(id=question_id).get()
 
-    # Фуекция, возвращвющая данные для шаблонизации левой колонки
+    # Функция, возвращвющая данные для шаблонизации левой колонки
     # data_for_base = {
     #     # "popular_tags": [""],
     #     # "best_members": [""]
@@ -52,6 +52,9 @@ class QuestionManager(models.Manager):
             "popular_tags": self.__popular_tags(),
             "best_members": self.__best_members()
         }
+
+    # Функция, собирает данные о пользователе для отображения
+
 
     # Функция, собирающая данные для запроса.
     #     "questions": [

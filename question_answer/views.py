@@ -1,6 +1,9 @@
 from django.shortcuts import render
-import question_answer.paginator_lib  # моя обёртка вокруг django paginator
+import django.http as http
 import question_answer.data_prepearing as data_prepearing
+import question_answer.forms as forms  # мои формы для всех приходящих данных.
+import question_answer.models as models
+import django.contrib.auth as auth
 
 prepearer = data_prepearing.QuestionManager()
 
@@ -26,50 +29,65 @@ def adding_question(request):
 
 # форма регистрации
 def register_page(request):
-    return render(request, 'question_answer/registration_form.html', {})
+    # Если данный запрос типа POST, тогда
+    if request.method == "POST":
+        # Создаем экземпляр формы и заполняем данными из запроса (связывание, binding):
+        form = forms.SignupForm(request.POST)
+        # Проверка валидности данных формы:
+        if form.is_valid():
+            # Обработка данных из form.cleaned_data
+            user = models.User.objects.create_user(
+                username=form.cleaned_data['nickname'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password'],
+            )
+            user.first_name = form.cleaned_data['name']
+            user.save()
+            profile = models.Profile()
+            profile.user = user
+            profile.avatar_link = 'http://localhost:8080/static/avatar.jpeg'
+            # TODO: понять, как сохранить картинку из form.changed_data['avatar']
+            profile.save()
+            user = auth.authenticate(request, username=form.cleaned_data['nickname'], password=form.cleaned_data['password'])
+            # Переход на корневую страницу
+            return http.HttpResponseRedirect('/')
+    else:
+        form = forms.SignupForm()
+    return render(request, 'question_answer/registration_form.html', {"form": form})
 
 
 # форма входа
 def authorization_page(request):
-    return render(request, 'question_answer/authorization_form.html', {})
+    if request.method == "POST":
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            user = auth.authenticate(request, username=form.cleaned_data['login'], password=form.cleaned_data['password'])
+            if user is not None:
+                auth.login(request, user)
+                return http.HttpResponseRedirect(form.cleaned_data['referer'])
+            else:
+                form.add_error(field=None, error=forms.ValidationError("Неверный логин или пароль."))
+    else:
+        try:
+            url = request.META['HTTP_REFERER']
+        except AttributeError:
+            url = '/'
+        form = forms.LoginForm(initial={'referer': url})
+    return render(request, 'question_answer/authorization_form.html', {"form": form})
 
+# обработчик выхода
+def logout_page(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        try:
+            url = request.META["HTTP_REFERER"]
+        except AttributeError:
+            url = '/'
+        return http.HttpResponseRedirect(url)
+    return http.HttpResponse(status=204)  # No content (пользователь не должен сюда заходить)
 
 # страница одного вопроса
 def one_question_page(request, question_id=1):
-    # заглушка
-    # context = {
-    #     "popular_tags": ["half", "again", "travel", "book"],
-    #     "best_members": ["wgarcia", "lindseyclifford", "linda89"],
-    #     "question":
-    #         {
-    #             "id": "1",
-    #             "title": "1st_question",
-    #             "text": "Lorem ipsum",
-    #             "nickname": "loem",
-    #             "time": "12:00",
-    #             "tags": ["half", "again", "travel", "book"],
-    #             "rating": 0,
-    #         },
-    #     "ansvers": [
-    #         {
-    #             "id": "1",
-    #             "text": "lorem",
-    #             "nickname": "loremer",
-    #             "time": "13:01",
-    #             "rating": 0,
-    #             "best_answer": True,
-    #         },
-    #         {
-    #             "id": "1",
-    #             "text": "lorem",
-    #             "nickname": "loremer",
-    #             "time": "13:01",
-    #             "rating": 0,
-    #             "best_answer": False,
-    #         }
-    #     ]
-    # }
-
     context = prepearer.prepare_data_for_one_question(question_id)
     return render(request, 'question_answer/one_question_page.html', context=context)
 
@@ -82,4 +100,12 @@ def one_tag_page(request, tag, page=1):
 
 # страница настроек пользователя
 def user_settings(request):
+    # if request.method == "POST":
+    #     form = forms.SettingsForm(request.POST)
+    #     if form.is_valid():
+    #         pass
+    # else:
+    #     form = forms.SettingsForm()
+    #
+    # if
     return render(request, 'question_answer/user_settings.html', {})

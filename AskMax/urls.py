@@ -32,6 +32,8 @@ urlpatterns = [
     path('question/<int:question_id>/', views.one_question_page, name='question'),
     # форма логина(URL= /login/)
     path('login/', views.authorization_page, name='login'),
+    # обработчик logout, только POST
+    path('logout/', views.logout_page, name='logout'),
     # форма регистрации(URL= /signup/)
     path('signup/', views.register_page, name='signup'),
     # форма создания вопроса(URL= /ask/)
