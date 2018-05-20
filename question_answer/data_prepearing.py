@@ -163,7 +163,7 @@ class QuestionManager(models.Manager):
             "nickname": one_question.profile_id.user.username,
             "time": one_question.time.strftime("%d %b %y, %H:%M"),  # format: 01 Apr 18, 21:41
             "tags": [i.text for i in one_question.tags.all()],
-            "rating": one_question.rating,
+            "rating": one_question.rating
         }
         return {
             "ansvers": ansver_list,

@@ -34,12 +34,30 @@
     justify-content: space-between;
 }
 
-.plus:hover {
-    color: #1e7e34;
+.app-svg {
+    display: none;
 }
 
-.minus:hover {
-    color: #b21f2d;
+.btn{
+    padding: 0.1rem;
+}
+
+.btn-up svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+.btn-down svg {
+    width: 1rem;
+    height: 1rem;
+    padding: 0.1rem;
+}
+
+.btn-best svg {
+    width: 1rem;
+    height: 1rem;
+    padding: 0.1rem;
 }
 
 .page-item {

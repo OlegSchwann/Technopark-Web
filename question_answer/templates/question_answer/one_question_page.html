@@ -8,6 +8,23 @@
 {% extends "question_answer/basic_page.html" %}
 {% block links_in_header %}
     <link rel="stylesheet" href="/static/question_answer/one_question_page.css" type="text/css">
+    <svg class="app-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+        <symbol id="icon--comments__toggle" viewBox="0 0 6 6">
+            <g fill-rule="evenodd">
+                <path fill="currentColor" d="M6 3.5H0v-1h6"></path>
+                <path d="M2.5 6V0h1v6"></path>
+            </g>
+        </symbol>
+        <symbol id="icon--ui__rating-down" viewBox="0 0 18 10">
+            <path d="M17.85.35c.1.1.15.25.15.35 0 .15-.05.25-.15.35L9.8 9.6c-.15.2-.45.35-.8.35-.35 0-.65-.15-.8-.35L.15 1.05a.6.6 0 0 1 0-.7C.3.15.65 0 .95 0h16.1c.35 0 .65.15.8.35z"
+                  fill-rule="evenodd"></path>
+        </symbol>
+        <symbol id="icon--ui__rating-up" viewBox="0 0 18 10">
+            <path d="M17.85 9.65c.1-.1.15-.25.15-.35 0-.15-.05-.25-.15-.35L9.8.4C9.65.2 9.35.05 9 .05c-.35 0-.65.15-.8.35L.15 8.95a.6.6 0 0 0 0 .7c.15.2.5.35.8.35h16.1c.35 0 .65-.15.8-.35z"
+                  fill-rule="evenodd"></path>
+        </symbol>
+    </svg>
 {% endblock links_in_header %}
 
 {% block main_content %}
@@ -18,16 +35,26 @@
                 <div class="text-center">{{ question.nickname }}</div>
                 <div class="rating-counter">
                     <span>{{ question.rating }}</span>
-                    <form>
-                        <input class="evaluation_buttons plus" type="submit" value="▲">
-                        <input class="evaluation_buttons minus" type="submit" value="▼">
-                    </form>
+<form method="post" action="{% url "evaluation_of_questions" %}">
+    {% csrf_token %}
+    <input type="hidden" name="question_id" value="{{ question.id }}">
+    <button type="submit" class="btn btn-success btn-up" name="action" value="plus">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon--ui__rating-up icon--ui__rating-up_comments">
+    <use xlink:href="#icon--ui__rating-up"></use>
+</svg>
+    </button>
+    <button type="submit" class="btn btn-danger btn-down" name="action" value="minus">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon--ui__rating-down icon--ui__rating-down_comments">
+    <use xlink:href="#icon--ui__rating-down"></use>
+</svg>
+    </button>
+</form> 
                 </div>
             </div>
             <div class="qestion__content col-10"><!--Вокруг текстовой части-->
                 <h5>{{ question.title }}</h5>
                 <div>{{ question.text }}</div>
-                <div class="question_time">{{ question.time }}</div>
+                <time class="question_time">{{ question.time }} UTC±00:00</time>
                 <div class="tags-field">
                     🔗
                     {% for tag in question.tags %}
@@ -37,41 +64,63 @@
             </div>
         </div>
         <!--раздел с ответами на комментарий. Система такая-же, как и в обычной енте вопросов, но есть checkbox "верный"-->
-        {% for ansver in ansvers %}
-        <hr>
-        <div>
-            <div class="row ">
-                <div class="col-2"><!--обёртка вокруг аватарки и счётчика-->
-                    <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
-                    <div class="text-center">{{ ansver.nickname }}</div>
-                    <div class="rating-counter">
-                        <span>{{ ansver.rating }}</span>
-                        <form>
-                            <input class="evaluation_buttons plus" type="submit" value="▲">
-                            <input class="evaluation_buttons minus" type="submit" value="▼">
-                        </form>
+        {% for answer in ansvers %}
+            <hr>
+            <div id="#ansver{{ answer.id }}">
+                <div class="row">
+                    <div class="col-2"><!--обёртка вокруг аватарки и счётчика-->
+                        <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                        <div class="text-center">{{ answer.nickname }}</div>
+                        <div class="rating-counter">
+                            <span>{{ answer.rating }}</span>
+<form method="post" action="{% url "evaluation_of_answers" %}">
+    {% csrf_token %}
+    <input type="hidden" name="ansver_id" value="{{ answer.id }}">
+    <button type="submit" class="btn btn-success btn-up" name="action" value="plus">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="icon icon--ui__rating-up icon--ui__rating-up_comments">
+            <use xlink:href="#icon--ui__rating-up"></use>
+        </svg>
+    </button>
+    <button type="submit" class="btn btn-danger btn-down" name="action" value="minus">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="icon icon--ui__rating-down icon--ui__rating-down_comments">
+            <use xlink:href="#icon--ui__rating-down"></use>
+        </svg>
+    </button>
+    <button type="submit" class="btn btn-warning btn-best" name="action" value="best">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon--comments__toggle">
+            <use xlink:href="#icon--comments__toggle"></use>
+        </svg>
+    </button>
+</form>
+                        </div>
+                    </div>
+                    <div class="qestion__content col-10"><!--Вокруг текстовой части-->
+                        {% if answer.best_answer %}
+                            <span class="best_answer">✓</span>{# Надо сделать покрасивее галочку #}
+                        {% endif %}
+                        <div>{{ answer.text }}</div>
+                        <div class="question_time">{{ question.time }}</div>
                     </div>
                 </div>
-                <div class="qestion__content col-10"><!--Вокруг текстовой части-->
-                    {% if ansver.best_answer %}
-                        <span class="best_answer">✓</span>{# Надо сделать покрасивее галочку #}
-                    {% endif %}
-                    <span>{{ ansver.text }}</span>
-                    <div class="question_time">{{ question.time }}</div>
-                    <form>
-                        <input id="ansver_{{ ansver.id }}" type="checkbox">
-                        <label for="ansver_{{ ansver.id }}">правильно</label>
-                    </form>
-                </div>
             </div>
-        </div>
         {% endfor %}
         <hr>
         <!--форма для ответа-->
-        <form class="form-group">
-            <textarea class="form-control" id="AnsverTextarea" rows="1" placeholder="Ваш ответ."></textarea>
-            <br>
-            <input type="submit" class="btn btn-info" value="отправить">
-        </form>
+        <div class="form-group">
+            <form method="post" action="{{ request.get_full_path }}">
+                {% csrf_token %}
+                <div>
+            <textarea class="form-control"
+                      id="AnsverTextarea"
+                      name="{{ form.answer.html_name }}"
+                      rows="3"
+                      placeholder="Ваш ответ..."
+            >{{ form.answer.value | default_if_none:'' }}</textarea>
+                </div>
+                <input type="submit" class="btn btn-info" value="отправить">
+            </form>
+        </div>
     </div>
 {% endblock main_content %}

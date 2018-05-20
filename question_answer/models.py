@@ -5,7 +5,7 @@
 #  https://djbook.ru/rel1.7/topics/db/queries.html#saving-foreignkey-and-manytomanyfield-fields
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_delete
+import django.db.models.signals as signals
 from django.dispatch import receiver
 
 # замечания по User
@@ -98,7 +98,7 @@ class QuestionLike(models.Model):
     status = models.IntegerField(default=0)
 
 
-@receiver(post_save, sender=QuestionLike)
+@receiver(signals.post_save, sender=QuestionLike)
 def create_question_like(instance, created, **kwargs):
     """Callback, which add which reflects the rating in Question on every new QuestionLike"""
     updated_question = instance.question_id
@@ -127,17 +127,11 @@ class AnswerLike(models.Model):
     # присвоенный статус: int: 1 == '+', -1 == '-'
     status = models.IntegerField(default=0)
 
-
-@receiver(post_save, sender=AnswerLike)
-def create_user_profile(instance, created, **kwargs):
-    if created:
-        updated_answer = instance.answer_id
-        updated_answer.rating += instance.status
-        updated_answer.save()
-
-# @receiver(pre_delete, sender=AnswerLike)
-# def create_user_profile(instance, created, **kwargs):
-#     if created:
-#         updated_answer = instance.answer_id
-#         updated_answer.rating -= instance.status
-#         updated_answer.save()
+# Сигналы post_save и pre_save НЕ работают! И не дебажатся абсолютно!
+# @receiver(signals.pre_save, sender=AnswerLike)
+# def my_handler(sender, **kwargs):
+#     print('После создания.')
+# А pre_delete отрабатывает. Почему?
+# @receiver(signals.pre_delete, sender=AnswerLike)
+# def my_handler(sender, **kwargs):
+#     print('До удаления.')

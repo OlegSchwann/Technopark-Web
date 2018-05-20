@@ -26,7 +26,7 @@
                 <img src="/static/img/block_100x100pc.png" class="user_avatar bordered">
             </div>
             <div class="action-login">
-                <h5 class="nickname">{{ user.username }}</h5>
+                <h5 class="nickname">{{ user.first_name  }}</h5>
                 <a href="{% url "settings" %}">Настройки</a>
                 <form class="logout-link" action="{% url "logout" %}" method="POST">
                     {% csrf_token %}

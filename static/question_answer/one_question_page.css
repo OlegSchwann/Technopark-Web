@@ -1,4 +1,4 @@
-.main-content{
+.main-content {
     padding: 15px;
 }
 
@@ -18,19 +18,37 @@
     justify-content: space-between;
 }
 
-.plus:hover {
-    color: #1e7e34;
+.app-svg {
+    display: none;
 }
 
-.minus:hover {
-    color: #b21f2d;
+.btn{
+    padding: 0.1rem;
 }
 
-textarea{
+.btn-up svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+
+.btn-down svg {
+    width: 1rem;
+    height: 1rem;
+    padding: 0.1rem;
+}
+
+.btn-best svg {
+    width: 1rem;
+    height: 1rem;
+    padding: 0.1rem;
+}
+
+textarea {
     min-height: 7rem;
 }
 
-.best_answer{
+.best_answer {
     font-size: 2rem;
     color: #1e7e34;
 }

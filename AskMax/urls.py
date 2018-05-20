@@ -38,5 +38,9 @@ urlpatterns = [
     path('signup/', views.register_page, name='signup'),
     # форма создания вопроса(URL= /ask/)
     path('ask/', views.adding_question, name='ask'),
-    path('settings/', views.user_settings, name='settings')
+    path('settings/', views.user_settings, name='settings'),
+    # точка проставления галочки "лучший вопрос" и работы с like'ами ответов. POST only.
+    path('evaluation_of_answers/', views.evaluation_of_answers, name='evaluation_of_answers'),
+    # точка проставления like'ов для вопросов. POST only.
+    path('evaluation_of_questions/', views.evaluation_of_questions, name='evaluation_of_questions')
 ]

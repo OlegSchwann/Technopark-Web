@@ -6,6 +6,22 @@
 {% extends "question_answer/basic_page.html" %}
 {% block links_in_header %}
     <link rel="stylesheet" href="/static/question_answer/hot_qestions.css" type="text/css">
+    <svg class="app-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id="icon--comments__toggle" viewBox="0 0 6 6">
+        <g fill-rule="evenodd">
+            <path fill="currentColor" d="M6 3.5H0v-1h6"></path>
+            <path d="M2.5 6V0h1v6"></path>
+        </g>
+    </symbol>
+    <symbol id="icon--ui__rating-down" viewBox="0 0 18 10">
+        <path d="M17.85.35c.1.1.15.25.15.35 0 .15-.05.25-.15.35L9.8 9.6c-.15.2-.45.35-.8.35-.35 0-.65-.15-.8-.35L.15 1.05a.6.6 0 0 1 0-.7C.3.15.65 0 .95 0h16.1c.35 0 .65.15.8.35z"
+              fill-rule="evenodd"></path>
+    </symbol>
+    <symbol id="icon--ui__rating-up" viewBox="0 0 18 10">
+        <path d="M17.85 9.65c.1-.1.15-.25.15-.35 0-.15-.05-.25-.15-.35L9.8.4C9.65.2 9.35.05 9 .05c-.35 0-.65.15-.8.35L.15 8.95a.6.6 0 0 0 0 .7c.15.2.5.35.8.35h16.1c.35 0 .65-.15.8-.35z"
+              fill-rule="evenodd"></path>
+    </symbol>
+</svg>
 {% endblock links_in_header %}
 
 {% block main_content %}
@@ -22,10 +38,20 @@
                     <div class="text-center">{{ question.nickname }}</div>
                     <div class="rating-counter">
                         <span>{{ question.rating }}</span>
-                        <form>
-                            <input class="evaluation_buttons plus" type="submit" value="▲">
-                            <input class="evaluation_buttons minus" type="submit" value="▼">
-                        </form>
+<form method="post" action="{% url "evaluation_of_questions" %}">
+    {% csrf_token %}
+    <input type="hidden" name="question_id" value="{{ question.id }}">
+    <button type="submit" class="btn btn-success btn-up" name="action" value="plus">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon--ui__rating-up icon--ui__rating-up_comments">
+    <use xlink:href="#icon--ui__rating-up"></use>
+</svg>
+    </button>
+    <button type="submit" class="btn btn-danger btn-down" name="action" value="minus">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon--ui__rating-down icon--ui__rating-down_comments">
+    <use xlink:href="#icon--ui__rating-down"></use>
+</svg>
+    </button>
+</form>
                     </div>
                 </div>
                 <div class="qestion__content col-10"><!--Вокруг текстовой части-->

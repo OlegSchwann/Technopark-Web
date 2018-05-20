@@ -50,21 +50,19 @@ class SignupForm(forms.Form):
             raise forms.ValidationError("Имя уже используется, попоробуйте другое.")
         return nickname
 
-# Сылка "выход". Располагается на каждой странице в шапке сайта.
-# Видна только авторизованным пользователям.
-# После выхода пользователь остается на текущей странице.
-
-
-
 # Форма редактирования профиля. Располагается по URL /profile/edit.
 # Доступна только для авторизованоого пользователя.
 # Пользователь видит все необходимые поля: email, nick, avatar.
 # После сохранения остается на странице.
-
+# nickname - просто шаблонизируется, без возможности редактирования.
+# name - можно поменять.
+# email - можно поменять.
+# avatar - можно поменять.
 class SettingsForm(forms.Form):
-    email = forms.EmailField()
-    nickname = forms.CharField()
+    nickname = forms.CharField(disabled=True, required=False)
     name = forms.CharField()
+    email = forms.EmailField()
+    avatar = forms.ImageField(required=False)
 
 # Форма добавления вопроса. Располагается по URL /ask/.
 # Пользователь вводит название, текст и тэги вопроса.
@@ -72,7 +70,60 @@ class SettingsForm(forms.Form):
 
 
 
+
+class AskForm(forms.Form):
+    # заголовок
+    title = forms.CharField()
+    # текст вопроса
+    text = forms.CharField()
+    # теги
+    tags = forms.CharField()
+
+    # проверки - не меньше трёх тегов.
+    def clean_tags(self):
+        tags_string = self.cleaned_data.get('tags')
+        # разделяем по запятым и убираем пробелы по краям
+        tags = [tag.lower() for tag in filter(lambda x: x != '', [
+            tag.strip() for tag in tags_string.split(sep=',')
+        ])]
+        if tags.__len__() < 3:
+            raise forms.ValidationError("Введите хотя бы 3 тега, что бы ваш вопрос было проще найти.")
+        return tags
+
+
 # Форма добавления ответа. Располагается на странице вопроса URL /question/<id>.
 # Пользователь вводит только текст ответа.
 # После успешного добавления необходимо отправить пользователя на нужную старницу ответов данного вопроса
 # и проскролить страницу так, чтобы добавленный ответ был виден.
+
+class AnswerForm(forms.Form):
+    # текст ответа
+    answer = forms.CharField()
+
+# точка обработки like ответа.
+class AnswerEvaluationForm(forms.Form):
+    # id ответа. id в базе сквозные.
+    ansver_id = forms.CharField()
+    # действие - поcтавить плюс, минус, отметить как правильный ответ.
+    action = forms.CharField()
+
+    def clean_action(self):
+        action = self.cleaned_data.get('action')
+        if action in ['plus', 'minus', 'best']:
+            return action
+        else:
+            raise ValidationError('Неизвестное действие "{}"'.format(action))
+
+# точка обработки like вопроса.
+class QuestionEvaluationForm(forms.Form):
+    # id вопроса. id в базе сквозные.
+    question_id = forms.CharField()
+    # действие - поcтавить плюс, минус.
+    action = forms.CharField()
+
+    def clean_action(self):
+        action = self.cleaned_data.get('action')
+        if action in ['plus', 'minus']:
+            return action
+        else:
+            raise ValidationError('Неизвестное действие "{}"'.format(action))
