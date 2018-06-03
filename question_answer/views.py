@@ -60,7 +60,7 @@ def register_page(request):
     # Если данный запрос типа POST, тогда
     if request.method == "POST":
         # Создаем экземпляр формы и заполняем данными из запроса (связывание, binding):
-        form = forms.SignupForm(request.POST)
+        form = forms.SignupForm(request.POST, request.FILES)
         # Проверка валидности данных формы:
         if form.is_valid():
             # Обработка данных из form.cleaned_data
@@ -73,11 +73,14 @@ def register_page(request):
             user.save()
             profile = models.Profile()
             profile.user = user
-            profile.avatar_link = 'http://localhost:8080/static/avatar.jpeg'
-            # TODO: понять, как сохранить картинку из form.changed_data['avatar']
+            avatar = form.cleaned_data['avatar']
+            if avatar:
+                profile.avatar = form.cleaned_data['avatar']
+            else:
+                profile.avatar = 'avatars/default.jpg'
             profile.save()
-            user = auth.authenticate(request, username=form.cleaned_data['nickname'],
-                                     password=form.cleaned_data['password'])
+            auth.authenticate(request, username=form.cleaned_data['nickname'],
+                              password=form.cleaned_data['password'])
             # Переход на корневую страницу
             return http.HttpResponseRedirect('/')
     else:
@@ -153,21 +156,26 @@ def one_tag_page(request, tag, page=1):
 
 
 # страница настроек пользователя
-@auth_decorators.login_required
+@auth_decorators.login_required(login_url='/login/')
 def user_settings(request):
     if request.method == "POST":
-        form = forms.SettingsForm(request.POST)
+        form = forms.SettingsForm(request.POST, request.FILES)
         if form.is_valid():
             request.user.email = form.cleaned_data['email']
             request.user.first_name = form.cleaned_data['name']
             request.user.save()
+            avatar = form.cleaned_data['avatar']
+            if avatar:
+                request.user.profile.avatar = avatar
+                request.user.profile.save()
     else:
         form = forms.SettingsForm()
     return render(request, 'question_answer/user_settings.html', {"form": form})
 
+
 # страница проставления галочки "лучший вопрос"
 # и работы с like'ами ответов
-@auth_decorators.login_required
+@auth_decorators.login_required(login_url='/login/')
 def evaluation_of_answers(request):
     if request.method == "POST":
         form = forms.AnswerEvaluationForm(request.POST)
@@ -226,8 +234,9 @@ def evaluation_of_answers(request):
             return http.HttpResponseRedirect(referer)
     return http.HttpResponse(status=204)  # No content
 
+
 # работа с like'ами вопросов
-@auth_decorators.login_required
+@auth_decorators.login_required(login_url='/login/')
 def evaluation_of_questions(request):
     if request.method == "POST":
         form = forms.QuestionEvaluationForm(request.POST)
@@ -243,7 +252,7 @@ def evaluation_of_questions(request):
                         # id пользователя, поставившего оценку
                         profile_id=request.user.profile,
                         # id оцененного ответа, index
-                        question_id =question,
+                        question_id=question,
                         # присвоенный статус: int: 1 == '+', -1 == '-'
                         status=+1
                     )

@@ -31,7 +31,7 @@
     <div class="main-content bordered">
         <div class="row ">
             <div class="col-2"><!--обёртка вокруг аватарки и счётчика-->
-                <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                <img class="img-filling bordered" src="{{ question.avatar_url }}">
                 <div class="text-center">{{ question.nickname }}</div>
                 <div class="rating-counter">
                     <span>{{ question.rating }}</span>
@@ -48,7 +48,7 @@
     <use xlink:href="#icon--ui__rating-down"></use>
 </svg>
     </button>
-</form> 
+</form>
                 </div>
             </div>
             <div class="qestion__content col-10"><!--Вокруг текстовой части-->
@@ -69,7 +69,7 @@
             <div id="#ansver{{ answer.id }}">
                 <div class="row">
                     <div class="col-2"><!--обёртка вокруг аватарки и счётчика-->
-                        <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                        <img class="img-filling bordered" src="{{ answer.avatar_url }}">
                         <div class="text-center">{{ answer.nickname }}</div>
                         <div class="rating-counter">
                             <span>{{ answer.rating }}</span>

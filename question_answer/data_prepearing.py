@@ -63,6 +63,7 @@ class QuestionManager(models.Manager):
     #             "title": "",
     #             "text": "",
     #             "nickname": "",
+    #             "avatar_url": "",
     #             "time": "",
     #             "tags": [""],
     #             "rating": 0,
@@ -87,6 +88,7 @@ class QuestionManager(models.Manager):
                 "title": one_question.title,
                 "text": one_question.text,
                 "nickname": one_question.profile_id.user.username,
+                "avatar_url": one_question.profile_id.avatar.url,
                 "time": one_question.time.strftime("%d %b %y, %H:%M"),  # format: 01 Apr 18, 21:41
                 "tags": [i.text for i in one_question.tags.all()],
                 "rating": one_question.rating,
@@ -129,6 +131,7 @@ class QuestionManager(models.Manager):
     #             "title": "",
     #             "text": "",
     #             "nickname": "",
+    #             "avatar_url": "",
     #             "time": "",
     #             "tags": [""],
     #             "rating": 0,
@@ -138,6 +141,7 @@ class QuestionManager(models.Manager):
     #             "id": "",
     #             "text": "",
     #             "nickname": "",
+    #             "avatar_url": "",
     #             "time": "",
     #             "rating": 0,
     #             "best_answer": True,
@@ -151,6 +155,7 @@ class QuestionManager(models.Manager):
                 "id": ansver.id,
                 "text": ansver.text,
                 "nickname": ansver.profile_id.user.username,
+                "avatar_url": ansver.profile_id.avatar.url,
                 "time": ansver.time,
                 "best_answer": ansver.best_answer,
                 "rating": ansver.rating
@@ -161,6 +166,7 @@ class QuestionManager(models.Manager):
             "title": one_question.title,
             "text": one_question.text,
             "nickname": one_question.profile_id.user.username,
+            "avatar_url": one_question.profile_id.avatar.url,
             "time": one_question.time.strftime("%d %b %y, %H:%M"),  # format: 01 Apr 18, 21:41
             "tags": [i.text for i in one_question.tags.all()],
             "rating": one_question.rating

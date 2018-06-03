@@ -1,3 +1,6 @@
+from django.conf import settings
+from django.conf.urls.static import static
+
 """AskMax URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -43,4 +46,5 @@ urlpatterns = [
     path('evaluation_of_answers/', views.evaluation_of_answers, name='evaluation_of_answers'),
     # точка проставления like'ов для вопросов. POST only.
     path('evaluation_of_questions/', views.evaluation_of_questions, name='evaluation_of_questions')
-]
+]   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

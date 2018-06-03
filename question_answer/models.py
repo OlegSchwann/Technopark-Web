@@ -26,8 +26,7 @@ class Profile(models.Model):
     # ссылка на стандартную форму, с помощью которой происходит авторизация и регистрация
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # ссылка на Аватар
-    avatar_link = models.URLField()
-    # avatar = models.ImageField()
+    avatar = models.ImageField(null=True, upload_to='avatars')
 
 
 # @receiver(post_save, sender=User)
@@ -98,14 +97,14 @@ class QuestionLike(models.Model):
     status = models.IntegerField(default=0)
 
 
-@receiver(signals.post_save, sender=QuestionLike)
-def create_question_like(instance, created, **kwargs):
-    """Callback, which add which reflects the rating in Question on every new QuestionLike"""
-    updated_question = instance.question_id
-    # print("добавляется ", instance.status, ", старый рейтинг ", updated_question.rating)
-    updated_question.rating += instance.status
-    updated_question.save()
-    # print("новый рейтинг", updated_question.rating)
+# @receiver(signals.post_save, sender=QuestionLike)
+# def create_question_like(instance, created, **kwargs):
+#     """Callback, which add which reflects the rating in Question on every new QuestionLike"""
+#     updated_question = instance.question_id
+#     # print("добавляется ", instance.status, ", старый рейтинг ", updated_question.rating)
+#     updated_question.rating += instance.status
+#     updated_question.save()
+#     # print("новый рейтинг", updated_question.rating)
 
 
 # @receiver(pre_delete, sender=QuestionLike)

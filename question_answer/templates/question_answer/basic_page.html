@@ -6,8 +6,9 @@
     <!--Это базовый шаблон, создающий шапку, правую колонку и нижнюю панель
         блок content остаётся пустым и будет переопределён дочерними шаблонами-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/question_answer/basic_page.css" type="text/css">
+    <link type="text/css" rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="/static/question_answer/basic_page.css">
+    {% load static %}
     {% block links_in_header %}
         {#ссылки на js и css, специфичные для каждой страницы#}
     {% endblock links_in_header %}
@@ -23,7 +24,7 @@
     {% if user.is_authenticated %}
         <div class="avatar-wrapper col-4">
             <div class="col-5">
-                <img src="/static/img/block_100x100pc.png" class="user_avatar bordered">
+                <img src="{{ user.profile.avatar.url }}" class="user-avatar bordered">
             </div>
             <div class="action-login">
                 <h5 class="nickname">{{ user.first_name  }}</h5>

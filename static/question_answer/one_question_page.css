@@ -1,5 +1,6 @@
 .main-content {
     padding: 15px;
+    min-height: 50rem;
 }
 
 .evaluation_buttons {

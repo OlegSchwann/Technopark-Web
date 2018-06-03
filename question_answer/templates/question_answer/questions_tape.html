@@ -34,7 +34,7 @@
         {% for question in questions %}
             <div class="question bordered">
                 <div class="col-2">
-                    <img class="img-filling bordered" src="/static/img/block_100x100pc.png">
+                    <img class="img-filling bordered" src="{{ question.avatar_url }}"> {# TODO добавить ссылку.#}
                     <div class="text-center">{{ question.nickname }}</div>
                     <div class="rating-counter">
                         <span>{{ question.rating }}</span>
@@ -59,7 +59,7 @@
                     <div>{{ question.text }}</div>
                     <div>
                         <a href="{% url "question" question.id %}">ответы ({{ question.answers }})</a>
-                        <span class="question_time">{{ question.time }}<span>
+                        <span class="question_time">{{ question.time }}</span>
                     </div>
 
                     <div class="tags-field">
