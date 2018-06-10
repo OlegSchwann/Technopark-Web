@@ -63,6 +63,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'question_answer.context_processors.extract_top_tag',  # мои процессоры для
+                'question_answer.context_processors.extract_top_users',  # правой колонки
             ],
         },
     },

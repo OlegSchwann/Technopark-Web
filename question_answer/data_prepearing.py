@@ -20,41 +20,9 @@ class QuestionManager(models.Manager):
         """Return QuerySet of Questions on one tag, ordered DEC by rating, count of Likes"""
         return my_db.Question.objects.filter(tags__text=tag).order_by('-rating')
 
-    def __popular_tags(self):
-        """Return 10 most popular tags"""
-        return [
-            i.text for i in my_db.Tag.objects
-                                .annotate(num_referring_questions=models.Count("question"))
-                                .order_by('-num_referring_questions')[:10]
-        ]
-
-    def __best_members(self):
-        """Return 10 members, top of rating"""
-        # сортировка по количеству Like, которые поставили их ответам
-        return [
-            i.user.username for i in my_db.Profile.objects
-                                         .annotate(rating=models.Sum("answer__rating"))
-                                         .order_by('rating')[:10]
-        ]
-
     def __one_question(self, question_id):
         """Return one quersion with id"""
         return my_db.Question.objects.filter(id=question_id).get()
-
-    # Функция, возвращвющая данные для шаблонизации левой колонки
-    # data_for_base = {
-    #     # "popular_tags": [""],
-    #     # "best_members": [""]
-    # }
-    # TODO: Редко обновляется, сделать кешируемой
-    def __base_data(self):
-        return {
-            "popular_tags": self.__popular_tags(),
-            "best_members": self.__best_members()
-        }
-
-    # Функция, собирает данные о пользователе для отображения
-
 
     # Функция, собирающая данные для запроса.
     #     "questions": [
@@ -98,8 +66,7 @@ class QuestionManager(models.Manager):
             "questions": result,
             "previous_pages": previous_pages,
             "current_page": current_page,
-            "next_pages": next_pages,
-            **self.__base_data()
+            "next_pages": next_pages
         }
 
     # возвращает уже готовый для шаблонизации массив
@@ -123,8 +90,6 @@ class QuestionManager(models.Manager):
 
     # возвращает данные для шаблонизации
     # context = {
-    #     "popular_tags": [""],
-    #     "best_members": [""], #  **self.__base_data()
     #     "question":
     #         {
     #             "id": "",
@@ -173,7 +138,6 @@ class QuestionManager(models.Manager):
         }
         return {
             "ansvers": ansver_list,
-            "question": question_data,
-            **self.__base_data()
+            "question": question_data
         }
 

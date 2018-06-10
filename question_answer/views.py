@@ -17,12 +17,12 @@ prepearer = data_prepearing.QuestionManager()
 # главная страница '/'
 # показывает заданные вопросы списком
 def hot_questions(request, page=1):
-    context = prepearer.new_questions(page_number=page)
+    context = prepearer.best_question(page_number=page)
     return render(request, 'question_answer/hot_questions.html', context=context)
 
 
-def all_questions(request, page=1):
-    context = prepearer.best_question(page_number=page)
+def new_questions(request, page=1):
+    context = prepearer.new_questions(page_number=page)
     return render(request, 'question_answer/all_questions.html', context=context)
 
 

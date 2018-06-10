@@ -5,6 +5,10 @@
     padding: 15px;
 }
 
+.main-captions h4{
+    margin: 0;
+}
+
 .question {
     display: flex;
     flex-direction: row;

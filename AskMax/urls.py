@@ -23,8 +23,8 @@ from question_answer import views
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     # cписок новых вопросов(главная страница) (URL = /)
-    path('', views.all_questions,),
-    path('<int:page>/', views.all_questions, name='new'),
+    path('', views.new_questions, ),
+    path('<int:page>/', views.new_questions, name='new'),
     # cписок “лучших” вопросов(URL= /hot/)
     path('hot/', views.hot_questions),
     path('hot/<int:page>/', views.hot_questions, name='hot'),
@@ -46,5 +46,5 @@ urlpatterns = [
     path('evaluation_of_answers/', views.evaluation_of_answers, name='evaluation_of_answers'),
     # точка проставления like'ов для вопросов. POST only.
     path('evaluation_of_questions/', views.evaluation_of_questions, name='evaluation_of_questions')
-]   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
-    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

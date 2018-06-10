@@ -29,18 +29,7 @@ class Profile(models.Model):
     avatar = models.ImageField(null=True, upload_to='avatars')
 
 
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         Profile.objects.create(user=instance)
-#
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
-
-
-# тэг --выборка--> popular_tags
+# тэг
 class Tag(models.Model):
     # текст комментария
     text = models.TextField()
@@ -97,24 +86,6 @@ class QuestionLike(models.Model):
     status = models.IntegerField(default=0)
 
 
-# @receiver(signals.post_save, sender=QuestionLike)
-# def create_question_like(instance, created, **kwargs):
-#     """Callback, which add which reflects the rating in Question on every new QuestionLike"""
-#     updated_question = instance.question_id
-#     # print("добавляется ", instance.status, ", старый рейтинг ", updated_question.rating)
-#     updated_question.rating += instance.status
-#     updated_question.save()
-#     # print("новый рейтинг", updated_question.rating)
-
-
-# @receiver(pre_delete, sender=QuestionLike)
-# def delete_user_profile(instance, **kwargs):
-#     """Callback, which add which reflects the rating in Question on every new QuestionLike"""
-#     updated_question = instance.question_id
-#     updated_question.rating -= instance.status
-#     updated_question.save()
-
-
 # лайк для ответов
 class AnswerLike(models.Model):
     # id первичный ключ
@@ -127,10 +98,17 @@ class AnswerLike(models.Model):
     status = models.IntegerField(default=0)
 
 # Сигналы post_save и pre_save НЕ работают! И не дебажатся абсолютно!
-# @receiver(signals.pre_save, sender=AnswerLike)
-# def my_handler(sender, **kwargs):
-#     print('После создания.')
-# А pre_delete отрабатывает. Почему?
-# @receiver(signals.pre_delete, sender=AnswerLike)
-# def my_handler(sender, **kwargs):
-#     print('До удаления.')
+# Логика поддержания целостности находится в обработчиках формы.
+
+#  данные для правой колонки (лучшие пользователи, популярные тэги).
+#  Популярные тэги - это 10 тэгов с самым большим количеством вопросов за последние 3 месяца.
+
+# тэг --выборка--> popular_tags
+class ExcerptTag(models.Model):
+    # текст комментария
+    text = models.TextField()
+
+#  Лучшие пользователи - это пользователи с самым большим количеством вопросов + ответов за последние 3 месяца.
+class ExcerptUsername(models.Model):
+    # текст комментария
+    username = models.TextField()

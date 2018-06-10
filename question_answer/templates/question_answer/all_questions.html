@@ -4,8 +4,9 @@
 
 {% block section_header %}
     <div class="main-captions bordered">
-        <h4>Свежие вопросы.</h4>
-        <a href="/ask/">Задать вопрос.</a>
+        <h4>Новые вопросы.</h4>
+        <a href="{% url 'hot' 1 %}">горячие обсуждения.</a>
+        <a href="{% url 'ask' %}">Задать вопрос.</a>
     </div>
 {% endblock section_header %}
 

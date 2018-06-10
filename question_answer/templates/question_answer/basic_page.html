@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Questions</title><!--заголовок-->
+    <link rel="icon" type="image/png" href="/static/img/question-icon.png"/><!--иконка сайта-->
     <!--Это базовый шаблон, создающий шапку, правую колонку и нижнюю панель
         блок content остаётся пустым и будет переопределён дочерними шаблонами-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,19 +16,20 @@
 </head>
 <body>
 <header class="gradient_backgraund">
-    <a href="/"><h1 class="logo col-3">AskMax</h1></a>
-    <form class="d-flex d-inline-flex col-5">
-        <input class="form-control" placeholder="" type="text">
+    <a class="d-flex" href="/"><img class="logo" src="/static/img/question-logo-white.png"/></a>
+
+    <form class="d-flex flex-row">
+        <input class="form-control search-field" placeholder="" type="text">
         <button class="btn btn-info" type="submit">Найти</button>
     </form>
 
     {% if user.is_authenticated %}
-        <div class="avatar-wrapper col-4">
-            <div class="col-5">
+        <div class="avatar-wrapper">
+            <div class="">
                 <img src="{{ user.profile.avatar.url }}" class="user-avatar bordered">
             </div>
             <div class="action-login">
-                <h5 class="nickname">{{ user.first_name  }}</h5>
+                <h5 class="nickname">{{ user.first_name }}</h5>
                 <a href="{% url "settings" %}">Настройки</a>
                 <form class="logout-link" action="{% url "logout" %}" method="POST">
                     {% csrf_token %}
@@ -42,30 +44,30 @@
     {% endif %}
 
 </header>
-<div class="main-container">
-    <div class="col-md-4 left-column">
-        <div class="popular-tags-wrapper bordered">
-            <h4>Популярные темы</h4>
-            <div class="popular-tags">
-                {% for tag in popular_tags %}
-                    <a href="{% url 'tag' tag %}">{{ tag }}</a><br>
-                {% endfor %}
-            </div>
-        </div>
-        <div class="best-members-wrapper bordered">
-            <h4>Лучшие участники</h4>
-            <div class="best-members">
-                {% for member in best_members %}
-                    <span class="member">{{ member }}</span><br>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <main class="col-md-7 right-column">
+<div class="container d-flex flex-column flex-lg-row flex-xl-row">
+    <main class="right-column">
         {% block main_content %}
             Тут должено распологаться полезное содержимое сайта.
         {% endblock main_content %}
     </main>
+    <div class="d-flex flex-row col-12 flex-lg-column col-lg-3 flex-xl-column col-xl-3 left-column">
+        <div class="popular-tags-wrapper bordered flex-column">
+            <h4 class="d-flex">Популярные темы</h4>
+            <div class="popular-tags d-flex flex-column">
+                {% for tag in excerpt_tags %}
+                    <a class="d-flex" href="{% url 'tag' tag %}">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="best-members-wrapper bordered flex-column">
+            <h4 class="d-flex">Лучшие участники</h4>
+            <div class="best-members d-flex flex-column">
+                {% for username in excerpt_usernames %}
+                    <div class="member d-flex">{{ username }}</div><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 <div class="crutch_for_footer"></div>
 <footer class="gradient_backgraund">
