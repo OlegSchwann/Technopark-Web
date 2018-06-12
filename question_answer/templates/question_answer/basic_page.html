@@ -38,14 +38,15 @@
             </div>
         </div>
     {% else %} {# для не залогиненого. #}
-        <div><a href="{% url "login" %}">Войти</a> или <a href="{% url "signup" %}">зарегистрироваться.</a> Это не
-            займёт много времени.
+        <div>
+            <a href="{% url "login" %}">Войти</a> или <a href="{% url "signup" %}">зарегистрироваться.</a><br/>
+            Это не займёт много времени.
         </div>
     {% endif %}
 
 </header>
 <div class="container d-flex flex-column flex-lg-row flex-xl-row">
-    <main class="right-column">
+    <main class="right-column d-flex flex-column">
         {% block main_content %}
             Тут должено распологаться полезное содержимое сайта.
         {% endblock main_content %}
